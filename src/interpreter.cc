@@ -592,7 +592,7 @@ static void programMarkHeap(Program* program)
 }
 
 // 0x467A80
-int programPushString(Program* program, char* string)
+int programPushString(Program* program, const char* const string)
 {
     int v27;
     unsigned char* v20;
@@ -3142,7 +3142,7 @@ void programStackPushFloat(Program* program, float value)
     programStackPushValue(program, programValue);
 }
 
-void programStackPushString(Program* program, char* value)
+void programStackPushString(Program* program, const char* const value)
 {
     ProgramValue programValue;
     programValue.opcode = VALUE_TYPE_DYNAMIC_STRING;
@@ -3181,15 +3181,6 @@ int programStackPopInteger(Program* program)
         programFatalError("integer expected, got %x", programValue.opcode);
     }
     return programValue.integerValue;
-}
-
-float programStackPopFloat(Program* program)
-{
-    ProgramValue programValue = programStackPopValue(program);
-    if (programValue.opcode != VALUE_TYPE_INT) {
-        programFatalError("float expected, got %x", programValue.opcode);
-    }
-    return programValue.floatValue;
 }
 
 char* programStackPopString(Program* program)
