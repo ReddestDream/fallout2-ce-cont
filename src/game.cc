@@ -175,6 +175,14 @@ int gameInitWithOptions(const char* windowTitle, bool isMapper, int font, int fl
 
     debugPrint(">init_options_menu\n");
 
+    // load preferences before Splash screen to get proper brightness
+    if (_init_options_menu() != 0) {
+        debugPrint("Failed on init_options_menu\n");
+        return -1;
+    }
+
+    debugPrint(">init_options_menu\n");
+
     if (!gIsMapper && skipOpeningMovies < 2) {
         showSplash();
     }
@@ -347,13 +355,6 @@ int gameInitWithOptions(const char* windowTitle, bool isMapper, int font, int fl
     }
 
     debugPrint(">scr_disable\t");
-
-    if (_init_options_menu() != 0) {
-        debugPrint("Failed on init_options_menu\n");
-        return -1;
-    }
-
-    debugPrint(">init_options_menu\n");
 
     if (endgameDeathEndingInit() != 0) {
         debugPrint("Failed on endgameDeathEndingInit");
